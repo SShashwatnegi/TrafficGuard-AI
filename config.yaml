@@ -1,0 +1,71 @@
+# TrafficGuard AI Configuration
+
+paths:
+  output_dir: output
+  evidence_dir: output/evidence
+  reports_dir: output/reports
+  database: output/trafficguard.db
+
+models:
+  detector: yolov8n.pt
+  confidence_threshold: 0.35
+  iou_threshold: 0.45
+
+preprocessing:
+  enable_clahe: true
+  enable_denoise: true
+  enable_deblur: true
+  clahe_clip_limit: 2.5
+  clahe_tile_size: 8
+
+violations:
+  enabled:
+    - helmet_non_compliance
+    - seatbelt_non_compliance
+    - triple_riding
+    - wrong_side_driving
+    - stop_line_violation
+    - red_light_violation
+    - illegal_parking
+  min_confidence: 0.5
+
+lpr:
+  enabled: true
+  languages: ["en"]
+  min_plate_confidence: 0.4
+
+# Optional region-of-interest overrides (normalized 0-1 coordinates)
+# roi: {x1: 0.0, y1: 0.5, x2: 1.0, y2: 1.0}
+# stop_line_y: 0.72
+# no_parking_zones: [[0.1, 0.6, 0.4, 0.9]]
+
+analytics:
+  default_days: 30
+
+agents:
+  architecture: multi-agent
+  enabled:
+    - PreprocessingAgent
+    - VisionAgent
+    - PlateAgent
+    - SpatialAgent
+    - ViolationAnalystAgent
+    - TERA
+    - TERA-LLM
+    - EvidenceAgent
+    - InsightAgent
+    - CommandAgent
+
+expected_flow: right
+
+# LLM-assisted TERA (Phase 2) — LangGraph ReAct agent with upstream agent tools
+tera_llm:
+  enabled: true
+  provider: google          # openai | ollama | google
+  model: gemini-2.5-flash
+  api_key_env: GEMINI_API_KEY
+  # api_key: YOUR_GEMINI_API_KEY        # optional inline key (prefer env var)
+  # base_url: https://api.openai.com/v1
+  temperature: 0.0
+  max_tool_iterations: 12
+  fallback_to_rules_on_error: true

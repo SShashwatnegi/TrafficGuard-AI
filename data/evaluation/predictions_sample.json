@@ -1,0 +1,15 @@
+{
+  "detections": [
+    {
+      "image_id": "sample1",
+      "boxes": [
+        {"x1": 105, "y1": 205, "x2": 295, "y2": 395, "label": "car"},
+        {"x1": 360, "y1": 190, "x2": 490, "y2": 370, "label": "motorcycle"}
+      ]
+    }
+  ],
+  "violations": [
+    {"type": "helmet_non_compliance"},
+    {"type": "triple_riding"}
+  ]
+}
