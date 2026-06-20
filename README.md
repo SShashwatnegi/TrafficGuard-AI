@@ -121,13 +121,13 @@ Configure in `config.yaml`:
 ```yaml
 tera_llm:
   enabled: true
-  provider: openai    # or ollama
-  model: gpt-4o-mini
-  api_key_env: OPENAI_API_KEY
+  provider: google    # google, openai, or ollama
+  model: gemini-2.5-flash
+  api_key_env: GEMINI_API_KEY
   fallback_to_rules_on_error: true
 ```
 
-Set `OPENAI_API_KEY` in your environment (see `.env.example`). If LLM is unavailable, the system falls back to rule-based TERA.
+Set `GEMINI_API_KEY` in your `.env` file in the root directory. The dashboard uses `python-dotenv` to automatically load this key. If the LLM is unavailable, the system falls back to rule-based TERA.
 
 ## Configuration
 
